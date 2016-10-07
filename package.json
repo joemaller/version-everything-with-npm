@@ -1,0 +1,11 @@
+{
+  "name": "version-test",
+  "version": "1.0.1",
+  "description": "for testing version bumps, including a NPM script to bump version in WP plugin files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "joe maller <joe@ideasonpurpose.com>",
+  "license": "MIT"
+}
