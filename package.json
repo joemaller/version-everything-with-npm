@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "preversion": "./vars.js",
-    "version": "echo 'RUNNNNNNNNING VERSIONNNNNN'  0: $0    1: $1     2: $2    3: $3",
+    "version": "echo 'RUNNNNNNNNING VERSIONNNNNN'  0: $0    npm_package_version:  $npm_package_version ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "joe maller <joe@ideasonpurpose.com>",
