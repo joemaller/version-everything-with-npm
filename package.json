@@ -4,7 +4,7 @@
   "description": "for testing version bumps, including a NPM script to bump version in WP plugin files",
   "main": "index.js",
   "scripts": {
-    "version": "echo 'RUNNNNNNNNING VERSIONNNNNN'  0: $0    1: $1",
+    "version": "echo 'RUNNNNNNNNING VERSIONNNNNN'  0: $0    1: $1     2: $2    3: $3",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "joe maller <joe@ideasonpurpose.com>",
