@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "preversion": "./vars.js",
-    "version": "echo 'RUNNNNNNNNING VERSIONNNNNN'  0: $0    npm_package_version:  $npm_package_version ",
+    "version": "sed \"s/^Version:.*/Version: $npm_package_version/g\" fake_plugin.php",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "joe maller <joe@ideasonpurpose.com>",
