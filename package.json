@@ -3,9 +3,10 @@
   "version": "1.1.4",
   "description": "for testing version bumps, including a NPM script to bump version in WP plugin files",
   "main": "index.js",
+  "main_file": "fake_plugin.php",
   "scripts": {
     "preversion": "echo 1: $1   star: $*    at: $@",
-    "version": "./vars.js && sed \"s/^Version:.*/Version: $npm_package_version/g\" fake_plugin.php",
+    "version": "./vars.js && sed \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_main_file",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "joe maller <joe@ideasonpurpose.com>",
