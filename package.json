@@ -6,7 +6,7 @@
   "main_file": "fake_plugin.php",
   "scripts": {
     "preversion": "echo is this it? %s",
-    "version": "./vars.js && sed -i '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_main_file",
+    "version": "./vars.js && sed -i '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_main_file && git add -A",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "joe maller <joe@ideasonpurpose.com>",
