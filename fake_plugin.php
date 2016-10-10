@@ -1,12 +1,8 @@
 /*
-Plugin Name: Fake Version Test Plugin
+Plugin Name: Secret Internal Plugin
 Plugin URI: http://www.ideasonpurpose.com
-Description: lorem ipsum
-Author: Ideas On Purpose
+Description: An example plugin Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi libero voluptas fugit.
+Author: Joe Maller
 Version: 5.2.9
 Author URI: http://www.github.com/joemaller
 */
-
-phpinfo();
-
-
