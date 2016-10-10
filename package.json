@@ -2,13 +2,12 @@
   "name": "version-test",
   "version": "5.2.8",
   "description": "for testing version bumps, including a NPM script to bump version in WP plugin files",
-  "main": "index.js",
-  "main_file": "fake_plugin.php",
+  "version_file": "fake_plugin.php",
   "scripts": {
-    "preversion": "echo is this it? %s",
-    "version": "sed -i '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_main_file && git add -u",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "foo": "./vars.js",
+    "version": "sed -i '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_version_file && git add -u"
   },
   "author": "joe maller <joe@ideasonpurpose.com>",
+  "private": true,
   "license": "MIT"
 }

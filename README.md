@@ -17,15 +17,30 @@ Npm has a version command which is just wonderful. It's main purpose is to updat
 
 THere are three sub-commands which increment the version inline with the SemVer specification. Starting from a fictionally v1.0.0, the three commands do the following:
 
-* `npm version major` - v2.0.0
-* `npm version minor` - v1.1.0
-* `npm version patch` - v1.0.1
+* `npm version patch` sets version to v1.0.1
+* `npm version minor` sets version to v1.1.0
+* `npm version major` sets version to v2.0.0
 
 ### Even better with Scripts
 
-That's great, but not every project is an npm module. Some, like the WordPress plugin mentioned above, have their own version strings. It's very easy to update these to match NPM's incremented versions. 
+That's great, but not every project is an npm module. Some, like WordPress plugins and themes, store their own version strings in separate files. It's very easy to update these to match NPM's incremented versions. 
 
 Just add a `version` script to `package.json` and we're 90% there. The only complication is figuring out how to replace the Version string. Luckily some ancient Unix tools are perfect for this.
 
+So basically it's this: If you can match the version string with a Regex, you should be able to increment your versions with NPM without any extra files. 
 
 
+
+This syntax is also great because it eliminates a lot of the ambiguity with SemVer. I've always been a little uncertain, and I've heard people arbirarily incrementing version numbers completely arbitrarily. 
+
+
+The most important thing to know is which variables are available to our npm scripts. In much the same way that npm adds the local node_modules/bin to $PATH, everything in npm config and the package.json file are also available. The simple script from this [Stack Overflow answer][so] will dump everything to `stdout` for inspection.
+
+In my testing, I ended up with every item from my package.json file along with 90+ assorted config vars, many of which were empty. 
+
+
+
+
+
+
+[so]: http://stackoverflow.com/a/19381235/503463
