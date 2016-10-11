@@ -1,11 +1,11 @@
 {
   "name": "version-everything",
-  "version": "5.7.0",
+  "version": "1.0.0",
   "description": "Version everything with npm",
   "version_file": "version_everything.php",
   "scripts": {
     "vars": "./vars.js",
-    "version": "sed -i'' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_version_file && git add -u"
+    "version": "sed -i '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_version_file && git add -u"
   },
   "author": "joe maller <joe@joemaller.com>",
   "license": "MIT",
