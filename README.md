@@ -59,6 +59,17 @@ Here's a simple `package.json` for synchronizing the package version into a php 
 
 The sed pattern is simply `^Version:.*` which is replaced with `Version: $npm_package_version` (where `$npm_package_version` is something like `1.0.3`). That's called against `$npm_package_version_file` which is `version_everything.php`. The `-i` flag edits files in-place. Finally, all changed files are staged with `git add -u` to prevent accidental additions. 
 
+And that's it, our project can now be easily versioned using simple, clean npm commands.
+
+```text
+$ npm version major
+
+v1.0.0
+
+> version-everything@1.0.0 version /Users/joe/Desktop/version-test
+> sed -i '' "s/^Version:.*/Version: $npm_package_version/g" $npm_package_version_file && git add -u
+```
+
 
 
 ### Notes
