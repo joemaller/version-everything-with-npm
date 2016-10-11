@@ -1,6 +1,6 @@
 {
   "name": "version-test",
-  "version": "5.6.0",
+  "version": "5.6.1",
   "description": "for testing version bumps, including a NPM script to bump version in WP plugin files",
   "version_file": "fake_plugin.php",
   "scripts": {
