@@ -6,7 +6,7 @@
   "scripts": {
     "preversion": "./vars.js",
     "bar": "sed -Ei '' 's/github/gitlab/g' $npm_package_version_file",
-    "version": "sed -Ei '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_version_file && git add -u"
+    "version": "./vars.js && sed -Ei '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_version_file && git add -u"
   },
   "author": "joe maller <joe@ideasonpurpose.com>",
   "private": true,

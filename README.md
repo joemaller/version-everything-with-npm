@@ -35,8 +35,6 @@ To version files, I will be attaching a command to `version`.
 
 ### Vars that matter
 
-Despite what the documentation says about previous version, I could only seem to get ahold of the new version. Maybe there's a better way, but this is what I ended up with. The new version string is added to the script's environment as `$npm_package_version`.
-
 
 Rather than hard-coding the 
 
