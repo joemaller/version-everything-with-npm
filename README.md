@@ -30,7 +30,7 @@ The ability to [run arbitrary scripts][npm scripts] and simple shell commands fr
 
 npm runs scripts in a rich environment. Besides adding the local `node_modules/.bin` to `$PATH`, configuration and local package.json fields are also exposed. Variables are prefixed with [`$npm_config_`][config vars] and [`$npm_package_`][package.json vars] respectively. This [Stack Overflow answer][so] shows how to dump everything to `stdout` for inspection. 
 
-To version files, I will be attaching a command to `version`. 
+To version files, I will be attaching a command to `version`. This command runs immediately after npm updates `package.json` but before committing changes to Git. 
 
 
 ### Vars that matter
