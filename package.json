@@ -5,7 +5,7 @@
   "version_file": "version_everything.php",
   "scripts": {
     "vars": "./vars.js",
-    "version1": "sed -i '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_version_file && git add -u"
+    "version": "./vars.js && sed -i '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_version_file && git add -u"
   },
   "author": "joe maller <joe@joemaller.com>",
   "license": "MIT",
