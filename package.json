@@ -5,7 +5,7 @@
   "version_file": "fake_plugin.php",
   "scripts": {
     "foo": "./vars.js",
-    "version": "sed -i '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_version_file && git add -u"
+    "version": "sed -Ei '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_version_file && git add -u"
   },
   "author": "joe maller <joe@ideasonpurpose.com>",
   "private": true,
