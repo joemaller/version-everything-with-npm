@@ -1,6 +1,6 @@
 {
   "name": "version-everything",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Version everything with npm",
   "version_file": "version_everything.php",
   "scripts": {
