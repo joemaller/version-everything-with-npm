@@ -12,7 +12,7 @@ Sure saying "increment the version string, save the file, commit and push" sound
 
 Npm includes the wonderful [`npm version`][npm version] command. It's main purpose is to update the version number in `package.json`. As a bonus, if the package is also  a Git repository, the command will commit the updated `package.json` file *and tag the repository.*
 
-Several `version` sub-commands auto-increment package versions according to the SemVer specification. Starting from a v1.0.0, the three primary commands produce the  following:
+Several `version` sub-commands auto-increment package versions according to the [SemVer specification][semver]. Starting from a v1.0.0, the three primary commands produce the  following:
 
 * `npm version patch` sets version to v1.0.1
 * `npm version minor` sets version to v1.1.0
@@ -82,6 +82,7 @@ The sed pattern is simply `^Version:.*` which is replaced with `Version: $npm_pa
 [npm version]: https://docs.npmjs.com/cli/version
 [main]: https://docs.npmjs.com/files/package.json#main
 [sed]: http://www.grymoire.com/Unix/Sed.html
+[semver]: http://semver.org/
 
 [npm scripts]: https://docs.npmjs.com/misc/scripts
 [package.json vars]: https://docs.npmjs.com/misc/scripts#packagejson-vars
