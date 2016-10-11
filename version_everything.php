@@ -3,6 +3,6 @@ Plugin Name: Version Everything
 Plugin URI: http://www.joemaller.com/
 Description: Version everything with npm.
 Author: Joe Maller
-Version: 2.0.0
+Version: 1.0.8
 Author URI: http://www.github.com/joemaller
 */
