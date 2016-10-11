@@ -26,23 +26,30 @@ No problem. If the version strings can be matched with a regex, then they can al
 
 ### npm's killer feature
 
-The ability to [run arbitrary scripts][npm scripts] and simple shell commands from package.json is an incredibly useful feature which is too often overlooked. 
+The ability to [run arbitrary scripts][npm scripts] and simple shell commands from `package.json` is an incredibly useful feature which is too often overlooked. 
 
-npm runs scripts in a rich environment. Besides adding the local `node_modules/.bin` to `$PATH`, configuration and local package.json fields are also exposed. Variables are prefixed with [`$npm_config_`][config vars] and [`$npm_package_`][package.json vars] respectively. This [Stack Overflow answer][so] shows how to dump everything to `stdout` for inspection. 
+npm runs scripts in a rich environment. Besides adding the local `node_modules/.bin` to `$PATH`, configuration and local `package.json` fields are also exposed. Variables are prefixed with [`$npm_config_`][config vars] and [`$npm_package_`][package.json vars] respectively. This [Stack Overflow answer][so] shows how to dump everything to `stdout` for inspection. 
 
 To version files, I will be attaching a command to `version`. This command runs immediately after npm updates `package.json` but before committing changes to Git. 
 
 
-### Vars that matter
+### Justified and Ancient
+
+We could add a small script to the project, but there's no need. The 40-year old command line tool [sed][] does everything we need and more. It's ancient, proven and kind of magical. 
+
+But first, instead of hard-coding the version-containing file into the command, let's store it in a `package.json` field. While it might make sense to overload the [main][] field, a new field, `version_file`, will be easier to reason about later on.
+
+With that, here's a bare-bones `package.json` for synchronizing npm versioning with an arbitrary external file:
 
 
-Rather than hard-coding the 
 
-I considered overloading the [main][] attribute of `package.json` to define the file I'm using for versioning, but opted for a unique keypair instead. On one hand, it would make complete sense; this project isn't a true npm module, so the main file should point to whatever file is actually important. But by the same thinking, a new key will be easier to reason about later on. In the end, the file to be versioned is stored in `version_file` and can be referenced by the env var `$npm_package_version_file`.
-
+    "version_file": "fake_plugin.php",
 
 
-We could add a small script to the project, but there's no need. A 40-year old command line tool does everything we need and more. Sed is short for "stream editor", it's ancient, proven and kind of magical. 
+
+
+> *There is a slight difference between the macos and Linux (GNU) sed commands. On Macs, the in-place flag should have a space after it `sed -i ''` but on Linux, the space and quotes can be omitted, `sed -i` is enough.*
+
 
     sed -Ei '' 's/foo/bar/g' file.txt
 
@@ -69,7 +76,7 @@ One particular example is a private plugin we're using on several WordPress site
 
 
 
-In my tests, I ended up with every item from my package.json file along with 90+ assorted config vars.
+In my tests, I ended up with every item from my `package.json` file along with 90+ assorted config vars.
 
 
 
@@ -88,6 +95,7 @@ One particular example is an internal WordPress plugin  used on several sites. U
 [so]: http://stackoverflow.com/a/19381235/503463
 [npm version]: https://docs.npmjs.com/cli/version
 [main]: https://docs.npmjs.com/files/package.json#main
+[sed]: http://www.grymoire.com/Unix/Sed.html
 
 [npm scripts]: https://docs.npmjs.com/misc/scripts
 [package.json vars]: https://docs.npmjs.com/misc/scripts#packagejson-vars
