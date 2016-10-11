@@ -4,7 +4,8 @@
   "description": "for testing version bumps, including a NPM script to bump version in WP plugin files",
   "version_file": "fake_plugin.php",
   "scripts": {
-    "foo": "./vars.js",
+    "preversion": "./vars.js",
+    "bar": "sed -Ei '' 's/github/gitlab/g' $npm_package_version_file",
     "version": "sed -Ei '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_version_file && git add -u"
   },
   "author": "joe maller <joe@ideasonpurpose.com>",

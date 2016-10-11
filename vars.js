@@ -1,5 +1,5 @@
 #! /usr/bin/env node
 
-console.log({env: process.env})
+console.log(require('./package.json'));
 
-
+console.log({env: process.env});
