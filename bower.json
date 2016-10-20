@@ -1,0 +1,19 @@
+{
+  "name": "version-everything",
+  "description": "Version everything with npm",
+  "version": "1.0.1",
+  "main": "",
+  "authors": [
+    "joe maller <joe@joemaller.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
