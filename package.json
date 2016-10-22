@@ -2,12 +2,28 @@
   "name": "version-everything",
   "version": "1.0.1-2",
   "description": "Version everything with npm",
-  "version_file": "version_everything.php",
+  "version_file": "README.md example_wordpress_plugin.php example_wordpress_theme.css",
+  "version_json_file": "manifest.json",
   "scripts": {
-    "vars": "./vars.js",
-    "version": "sed -i '' \"s/^Version:.*/Version: $npm_package_version/g\" $npm_package_version_file && git add -u"
+    "dump-vars": "node dump-vars.js",
+    "env": "env",
+    "version:text": "replace \"^([# ]*Version: ).*\" \"\\$1$npm_package_version\" $npm_package_version_file",
+    "version:json": "json -I -f $npm_package_version_json_file -e \"this.version='$npm_package_version'\"",
+    "version": "npm run version:text && npm run version:json && git add -u"
   },
-  "author": "joe maller <joe@joemaller.com>",
+  "author": {
+    "name": "Joe Maller",
+    "email": "joe@joemaller.com",
+    "url": "http://www.joemaller.com"
+  },
   "license": "MIT",
-  "private": true
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joemaller/version-everything-with-npm"
+  },
+  "private": true,
+  "devDependencies": {
+    "json": "^9.0.4",
+    "replace": "^0.3.0"
+  }
 }
