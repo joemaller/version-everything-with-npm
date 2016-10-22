@@ -1,6 +1,6 @@
 {
   "name": "version-everything",
-  "version": "1.0.1-2",
+  "version": "1.0.1",
   "description": "Version everything with npm",
   "version_file": "README.md example_wordpress_plugin.php example_wordpress_theme.css",
   "version_json_file": "manifest.json",
