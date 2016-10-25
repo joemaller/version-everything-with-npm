@@ -6,7 +6,7 @@ Versioning internal projects is often an afterthought -- at best. Too often upda
 
 Usually it's not a big deal, the git history is good enough. But on a few longer-running projects it's become a problem.
 
-Sure saying "increment the version string, save the file, commit and push" sounds trivial, but that process still onerous enough and removed from our workflows that it's easy to blow off completely.
+Sure saying "increment the version string, save the file, commit and push" sounds trivial, but that process is still onerous enough and removed from our workflows that it's easy to blow off completely.
 
 
 ### Enter npm 
@@ -33,38 +33,83 @@ npm runs scripts in a rich environment. Besides adding the local `node_modules/.
 
 A command attached to `version` will run immediately after npm updates `package.json` but before committing changes to Git. This is when we'll update our other version-containing files.
 
+### You shouldn't. I already did.
+
+Bumping a version number should be a relatively simple task. While a small script could be added to the project, I prefer keeping project-unrelated files to a minimum. 
+
+JSON files can't contain executable code or even multi-line strings, but it's possible to embed a script with a simple transformation: Each line of the script becomes a string and the script is just an array of those line-strings. To run the script, send the joined array to `eval`. Limitations are inspiring.
+
+Terminal commands aren't necessarily portable across platforms, but these scripts will work everywhere without modification. 
 
 ### Use the best tool
 
-Bumping a version number should be a relatively simple task. While a small script could be added to the project, I prefer to keep project-unrelated files to a minimum.
+JavaScript wasn't designed to allow the semi-cryptic one-line scripts that [Ruby][] and [Perl][] can do. But since we're presumably already loading external JavaScript packages with npm, a [nearly infinite toolset][npm] is available to us. The embedded version script makes use of two packages; [shelljs][] for its sed clone, and [jsonfile][] for simple JSON updates. 
 
-JavaScript wasn't designed to allow the semi-cryptic one-line scripts that [Ruby][] and [Perl][] can do. But since we're presumably already loading external JavaScript packages with npm, a [nearly infinite toolset][npm] is available to us. In this case, the [replace][] package can be used to write a trim little  utility script.
+The `version_files` field in `package.json` contains a list of files to be versioned. While it might make sense to overload the [main][] field, the additional `version_file` field will be easier to reason about later on. 
 
-Instead of hard-coding the version-containing file into the command, store it in a `package.json` field. While it might make sense to overload the [main][] field, a new field, `version_file`, will be easier to reason about later on. Thanks to [replace][], `version_file` can be a single file, a space-delimited list of filenames or a [glob][].
+Here's the embedded script, it loops over the `version_files` array, first attempting to update each as JSON then falling back to string replacement.
 
-Here's a simple `package.json` for synchronizing the project version into two example WordPress files and the project Readme:
+```javascript
+const sed = require('shelljs').sed;
+const jsonfile = require('jsonfile');
+const pkg = require('./package.json');
+pkg.version_files.forEach(f => {
+  jsonfile.readFile(f, (err, data) => {
+    if (err) {
+     sed('-i', /^([# ]*Version: ).*/, `$1${ pkg.version }`, f);
+    } else  {
+      data.version = pkg.version;
+      jsonfile.writeFileSync(f, data, {spaces: 2});
+    }
+  });
+})
+```
+
+
+Putting it all together, here's the `package.json` file with the script embedded. The project version is synchronized across two example WordPress files, a `manifest.json` file and the project's `README.md`:
 
 ```json
 {
   "name": "version-everything",
-  "version": "1.0.1-2",
+  "version": "1.1.1",
   "description": "Version everything with npm",
-  "version_file": "README.md example_wordpress_plugin.php example_wordpress_theme.css",
+  "version_files": [
+    "README.md",
+    "example_wordpress_plugin.php",
+    "example_wordpress_theme.css",
+    "manifest.json"
+  ],
   "scripts": {
-    "version": "replace \"^([# ]*Version: ).*\" \"\\$1$npm_package_version\" $npm_package_version_file && git add -u"
+    "version": "node -e \"eval(require('./package.json').version_script_src.join(''))\" && git add -u"
   },
   "author": "joe maller <joe@joemaller.com>",
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "replace": "^0.3.0"
-  }
+    "jsonfile": "^2.4.0",
+    "shelljs": "^0.7.4"
+  },
+  "version_script_src": [
+    "const sed = require('shelljs').sed;",
+    "const jsonfile = require('jsonfile');",
+    "const pkg = require('./package.json');",
+    "pkg.version_files.forEach(f => {",
+    "  jsonfile.readFile(f, (err, data) => {",
+    "    if (err) {",
+    "     sed('-i', /^([# ]*Version: ).*/, `$1${ pkg.version }`, f);",
+    "    } else  {",
+    "      data.version = pkg.version;",
+    "      jsonfile.writeFileSync(f, data, {spaces: 2});",
+    "    }",
+    "  });",
+    "});"
+  ]
 }
 
 ```
 
 
-Aside from backslashitis, that's it! Three project files can now have their versions synchronized using simple, clean npm commands.
+That's it! Three project files can now have their versions synchronized using simple, clean npm commands.
 
 ```text
 $ npm version major
@@ -86,34 +131,6 @@ example_wordpress_theme.css
  7: Version: 1.0.0
 
 ```
-
-### Versioning JSON files
-
-Versioned JSON assets other than `package.json` should be treated as structured data since those files could be compacted or pretty-printed. This isn't difficult in vanilla node, but the [json][] package makes this a trivial task. The basic command looks like this:
-
-```text
-json -I -f manifest.json -e "this.version='1.2.3'"
-```
-
-Because npm [scripts can be composed][compose], JSON assets can easily be versioned alongside arbitrary, unstructured text files by calling other scripts from a master task script.
-
-Here are both version scripts composed into a single command: 
-
-```json
-
-{
-  ...
-  "npm_package_version_json_file": "manifest.json",
-  "scripts": {
-    "version:text": "replace \"^([# ]*Version: ).*\" \"\\$1$npm_package_version\" $npm_package_version_file",
-    "version:json": "json -I -f $npm_package_version_json_file -e \"this.version='$npm_package_version'\"",
-    "version": "npm run version:text && npm run version:json && git add -u"
-  }
-}
-
-```
-
-The [json package][json] only operates on single files, to version multiple JSON assets use additional script entries.
 
 ### Source repository
 
@@ -155,5 +172,6 @@ An example repository with accompanying files is on GitHub here:
 [perl]: http://www.math.harvard.edu/computing/perl/oneliners.txt
 [ruby]: http://reference.jumpingmonkey.org/programming_languages/ruby/ruby-one-liners.html
 [npm]: https://www.npmjs.com/
-[json]: https://www.npmjs.com/package/json
+[jsonfile]: https://www.npmjs.com/package/jsonfile
+[shelljs]: https://www.npmjs.com/package/shelljs
 [compose]: https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/#running-multiple-tasks

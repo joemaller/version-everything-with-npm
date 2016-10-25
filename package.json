@@ -38,7 +38,7 @@
     "     sed('-i', /^([# ]*Version: ).*/, `$1${ pkg.version }`, f);",
     "    } else  {",
     "      data.version = pkg.version;",
-    "      jsonfile.writeFileSync(f, data, {spaces: 2})",
+    "      jsonfile.writeFileSync(f, data, {spaces: 2});",
     "    }",
     "  });",
     "});"
