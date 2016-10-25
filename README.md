@@ -4,7 +4,7 @@
 
 Versioning internal projects is often an afterthought -- at best. Too often updating version numbers is completely forgotten.
 
-Usually it's not a big deal, the git history is good enough. But on a few longer-running projects it's become a problem.
+Usually it's not a big deal, the Git history is good enough. But on a few longer-running projects it's become a problem.
 
 Sure saying "increment the version string, save the file, commit and push" sounds trivial, but that process is still onerous enough and removed from our workflows that it's easy to blow off completely.
 
@@ -29,7 +29,7 @@ Not a problem. If the version strings can be matched with a regex or can be foun
 
 The ability to [run arbitrary scripts][npm scripts] and simple shell commands from `package.json` is an incredibly useful feature which is too often overlooked. 
 
-npm runs scripts in a rich environment. Besides adding the local `node_modules/.bin` to `$PATH`, all local configuration values and `package.json` fields are exposed. Variables are prefixed with [`$npm_config_`][config vars] and [`$npm_package_`][package.json vars] respectively. This [Stack Overflow answer][so] shows how to dump everything to `stdout` for inspection. 
+npm runs scripts in a rich environment. Besides adding the local `node_modules/.bin` to `$PATH`, all local configuration values and `package.json` fields are exposed. Variables are prefixed with [`$npm_config_`][config vars] and [`$npm_package_`][package.json vars] respectively. (This [Stack Overflow answer][so] shows how to dump everything to `stdout` for inspection.)
 
 A command attached to `version` will run immediately after npm updates `package.json` but before committing changes to Git. This is when we'll update our other version-containing files.
 
@@ -37,7 +37,7 @@ A command attached to `version` will run immediately after npm updates `package.
 
 Bumping a version number should be a relatively simple task. While a small script could be added to the project, I prefer keeping project-unrelated files to a minimum. 
 
-JSON files can't contain executable code or even multi-line strings, but it's possible to embed a script with a simple transformation: Each line of the script becomes a string and the script is just an array of those line-strings. To run the script, send the joined array to `eval`. Limitations are inspiring.
+JSON files can't contain executable code or even multi-line strings, but it's possible to embed a script with a simple transformation: Each line of the script becomes a string and the script is just an array of those line-strings. To run the script, send the joined array to `eval`. Limitations can be inspiring.
 
 Terminal commands aren't necessarily portable across platforms, but these scripts will work everywhere without modification. 
 
@@ -66,7 +66,7 @@ pkg.version_files.forEach(f => {
 ```
 
 
-Putting it all together, here's the `package.json` file with the script embedded. The project version is synchronized across two example WordPress files, a `manifest.json` file and the project's `README.md`:
+Putting it all together, here's the `package.json` file with the script embedded. The project version can now be synchronized across two example WordPress files, a `manifest.json` file and the project's `README.md` using simple, clean npm commands.
 
 ```json
 {
@@ -109,19 +109,6 @@ Putting it all together, here's the `package.json` file with the script embedded
 ```
 
 
-That's it! Three project files can now have their versions synchronized using simple, clean npm commands.
-
-```text
-$ npm version major
-
-v1.1.1
-
-> version-everything@1.1.1 version /Users/joe/Desktop/version-test
-> node -e "eval(require('./package.json').version_script_src.join(''))" && git add -u
-
-
-```
-
 ### Source repository
 
 An example repository with accompanying files is on GitHub here:
@@ -129,13 +116,6 @@ An example repository with accompanying files is on GitHub here:
 * https://github.com/joemaller/version-everything-with-npm
 
 ### Notes
-
-* Windows evironment variables are wrapped in `%` signs, so the `$npm_package_version` on unix would be available as `%npm_package_version%` on Windows. 
-
-* Windows commands should be re-written to use double-quotes instead of single-quotes. The version command above would look like this on Windows:
-     
-          "version": "replace \"^([# ]*Version: ).*\" \"$1%npm_package_version%\" %npm_package_version_file%"
-
 
 * *npm will not force-overwrite existing git tags with new commits. This is a good thing. Existing tags can be removed with `git tag -d tagname`.*
 
