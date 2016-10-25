@@ -114,21 +114,11 @@ That's it! Three project files can now have their versions synchronized using si
 ```text
 $ npm version major
 
-v1.0.0
+v1.1.1
 
-> version-everything@1.0.1-2 version /Users/joe/version-everything
-> npm run version:text && npm run version:json && git add -u
+> version-everything@1.1.1 version /Users/joe/Desktop/version-test
+> node -e "eval(require('./package.json').version_script_src.join(''))" && git add -u
 
-
-> version-everything@1.0.1-2 version /Users/joe/version-everything
-> replace "^([# ]*Version: ).*" "\$1$npm_package_version" $npm_package_version_file
-
-README.md
- 3: ##### Version: 1.0.0
-example_wordpress_plugin.php
- 6: Version: 1.0.0
-example_wordpress_theme.css
- 7: Version: 1.0.0
 
 ```
 
