@@ -11,7 +11,7 @@
   "scripts": {
     "dump-vars": "node dump-vars.js",
     "env": "env",
-    "version": "node -e \"eval(require('./package.json').version_script_src.join(''))\""
+    "version": "node -e \"eval(require('./package.json').version_script_src.join(''))\" && git add -u"
   },
   "author": {
     "name": "Joe Maller",
