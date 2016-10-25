@@ -2,14 +2,16 @@
   "name": "version-everything",
   "version": "1.1.0",
   "description": "Version everything with npm",
-  "version_file": "README.md example_wordpress_plugin.php example_wordpress_theme.css",
-  "version_json_file": "manifest.json",
+  "version_files": [
+    "README.md",
+    "example_wordpress_plugin.php",
+    "example_wordpress_theme.css",
+    "manifest.json"
+  ],
   "scripts": {
     "dump-vars": "node dump-vars.js",
     "env": "env",
-    "version:text": "replace \"^([# ]*Version: ).*\" \"\\$1$npm_package_version\" $npm_package_version_file",
-    "version:json": "json -I -f $npm_package_version_json_file -e \"this.version='$npm_package_version'\"",
-    "version": "npm run version:text && npm run version:json && git add -u"
+    "version": "node -e \"eval(require('./package.json').version_script_src.join(''))\""
   },
   "author": {
     "name": "Joe Maller",
@@ -23,7 +25,22 @@
   },
   "private": true,
   "devDependencies": {
-    "json": "^9.0.4",
-    "replace": "^0.3.0"
-  }
+    "jsonfile": "^2.4.0",
+    "shelljs": "^0.7.4"
+  },
+  "version_script_src": [
+    "const sed = require('shelljs').sed;",
+    "const jsonfile = require('jsonfile');",
+    "const pkg = require('./package.json');",
+    "pkg.version_files.forEach(f => {",
+    "  jsonfile.readFile(f, (err, data) => {",
+    "    if (err) {",
+    "     sed('-i', /^([# ]*Version: ).*/, `$1${ pkg.version }`, f);",
+    "    } else  {",
+    "      data.version = pkg.version;",
+    "      jsonfile.writeFileSync(f, data, {spaces: 2})",
+    "    }",
+    "  });",
+    "});"
+  ]
 }
