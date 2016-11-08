@@ -4,24 +4,24 @@
 
 Versioning internal projects is often an afterthought -- at best. Too often updating version numbers is completely forgotten.
 
-Usually it's not a big deal, the Git history is good enough. But on a few longer-running projects it's become a problem.
+Usually this is no big deal, the Git history is good enough. But on longer-running projects, it becomes a problem.
 
-Sure saying "increment the version string, save the file, commit and push" sounds trivial, but that process is still onerous enough and removed from our workflows that it's easy to blow off completely.
+Sure, saying "increment the version string, save the file, commit and push" sounds trivial, but that process is still onerous enough and removed from our workflows that it's easy to blow off completely.
 
 
 ### Enter npm 
 
-Npm includes the wonderful [`npm version`][npm version] command. It's main purpose is to update the version number in `package.json`. As a bonus, the command will commit the updated `package.json` file *and tag the repository.*
+Npm includes the wonderful [`npm version`][npm version] command. It's main purpose is to update the version number in a `package.json` file. As a bonus, the command commits the updated `package.json` file *and tags the repository.*
 
-Several `version` sub-commands auto-increment package versions according to the [SemVer specification][semver]. Starting from a v1.0.0, the three primary commands produce the  following:
+Several `version` sub-commands auto-increment the package version according to the [SemVer specification][semver]. Starting from version **1.0.0**, the three primary commands, `patch`, `minor` and `major` do this:
 
 * `npm version patch` sets version to v1.0.1
 * `npm version minor` sets version to v1.1.0
 * `npm version major` sets version to v2.0.0
 
-The command can also set explicit versions or increment pre-releases (1.2.3-x) with the `prepatch`, `preminor`, `premajor` and `prerelease` subcommands. These commands also eliminate some uncertainty about SemVer, clear action verbs are very easy to understand.
+The command can also set explicit versions or increment pre-releases (1.2.3-x) with the `prepatch`, `preminor`, `premajor` and `prerelease` subcommands. All of these commands also help reduce some uncertainty about SemVer; clear action verbs are very easy to understand.
 
-But of course, not every project is an npm package. Some, like WordPress plugins and themes store their own version strings in separate files written in other languages. 
+But of course, not every project is an npm package. Some, like WordPress plugins and themes store their own version strings in separate files, written in other languages. 
 
 Not a problem. If the version strings can be matched with a regex or can be found in a structured-data file, they can almost certainly be updated with a little scripting.
 
@@ -33,11 +33,11 @@ npm runs scripts in a rich environment. Besides adding the local `node_modules/.
 
 A command attached to `version` will run immediately after npm updates `package.json` but before committing changes to Git. This is when we'll update our other version-containing files.
 
-### You shouldn't. I already did.
-
 Bumping a version number should be a relatively simple task. While a small script could be added to the project, I prefer keeping project-unrelated files to a minimum. 
 
-JSON files can't contain executable code or even multi-line strings, but it's possible to embed a script with a simple transformation: Each line of the script becomes a string and the script is just an array of those line-strings. To run the script, send the joined array to `eval`. Limitations can be inspiring.
+### You shouldn't. I already did.
+
+JSON files can't contain executable code or even multi-line strings, but why let that stop us. It's completely possible to embed a script with a simple transformation: Each line of the script becomes a string and the script is just an array of those line-strings. To run the script, send the joined array to `eval`. This method feels a little naughty, but limitations can be inspiring.
 
 Terminal commands aren't necessarily portable across platforms, but these scripts will work everywhere without modification. 
 
