@@ -1,6 +1,6 @@
 
 # Version everything with npm
-##### Version: 1.1.1-3
+##### Version: 1.2.0
 
 Versioning internal projects is often an afterthought -- at best. Too often updating version numbers is completely forgotten.
 

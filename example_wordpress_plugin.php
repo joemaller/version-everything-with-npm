@@ -3,6 +3,6 @@ Plugin Name: Version Everything
 Plugin URI: https://github.com/joemaller/version-everything-with-npm
 Description: Version everything with npm: Example WordPress plugin
 Author: Joe Maller
-Version: 1.1.1-3
+Version: 1.2.0
 Author URI: http://www.github.com/joemaller
 */
