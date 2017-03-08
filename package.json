@@ -10,8 +10,8 @@
   ],
   "scripts": {
     "dump-vars": "node dump-vars.js",
-    "ve": "version-everything",
-    "env": "env"
+    "env": "env",
+    "version": "version-everything && git add -u"
   },
   "author": {
     "name": "Joe Maller",
