@@ -25,6 +25,6 @@
   },
   "private": true,
   "dependencies": {
-    "version-everything": "git+https://github.com/joemaller/version-everything.git"
+    "version-everything": "^0.1.0"
   }
 }
