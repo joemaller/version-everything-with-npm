@@ -13,7 +13,7 @@ Sure, saying "increment the version string, save the file, commit and push" soun
 
 Npm includes the wonderful [`npm version`][npm version] command. It's main purpose is to update the version number in a `package.json` file. As a bonus, the command commits the updated `package.json` file *and tags the repository.*
 
-Several `version` sub-commands auto-increment the package version according to the [SemVer specification][semver]. Starting from version **1.0.0**, the three primary commands, `patch`, `minor` and `major` do this:
+Several `version` sub-commands auto-increment the package version according to the [SemVer specification][semver]. For example, starting from version **1.0.0**, the three primary commands, `patch`, `minor` and `major` do this:
 
 * `npm version patch` sets version to v1.0.1
 * `npm version minor` sets version to v1.1.0
@@ -23,7 +23,7 @@ The command can also set explicit versions or increment pre-releases (1.2.3-x) w
 
 But of course, not every project is an npm package. Some, like WordPress plugins and themes store their own version strings in separate files, written in other languages. 
 
-Not a problem. If the version strings can be matched with a regex or can be found in a structured-data file, they can almost certainly be updated with a little scripting.
+Not a problem. If the version strings can be matched with a regex or found in a structured-data file, they can almost certainly be updated with a little scripting.
 
 ### npm's killer feature
 

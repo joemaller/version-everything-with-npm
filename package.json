@@ -1,5 +1,5 @@
 {
-  "name": "version-everything",
+  "name": "version-everything-test",
   "version": "1.2.0",
   "description": "Version everything with npm",
   "version_files": [
@@ -10,8 +10,8 @@
   ],
   "scripts": {
     "dump-vars": "node dump-vars.js",
-    "env": "env",
-    "version": "node -e \"eval(require('./package.json').version_script_src.join(''))\" && git add -u"
+    "ve": "version-everything",
+    "env": "env"
   },
   "author": {
     "name": "Joe Maller",
@@ -24,23 +24,7 @@
     "url": "https://github.com/joemaller/version-everything-with-npm"
   },
   "private": true,
-  "devDependencies": {
-    "jsonfile": "^2.4.0",
-    "shelljs": "^0.7.4"
-  },
-  "version_script_src": [
-    "const sed = require('shelljs').sed;",
-    "const jsonfile = require('jsonfile');",
-    "const pkg = require('./package.json');",
-    "pkg.version_files.forEach(f => {",
-    "  jsonfile.readFile(f, (err, data) => {",
-    "    if (err) {",
-    "     sed('-i', /^([# ]*Version: ).*/, `$1${ pkg.version }`, f);",
-    "    } else  {",
-    "      data.version = pkg.version;",
-    "      jsonfile.writeFileSync(f, data, {spaces: 2});",
-    "    }",
-    "  });",
-    "});"
-  ]
+  "dependencies": {
+    "version-everything": "git+https://github.com/joemaller/version-everything.git"
+  }
 }
