@@ -1,6 +1,6 @@
 {
   "name": "version-everything-test",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Version everything with npm",
   "version_files": [
     "README.md",
